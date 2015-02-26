@@ -6,10 +6,10 @@ import requests
 from lxml.html import fromstring
 from pync import Notifier
 
-ENDPOINT = 'http://obmenka.kharkov.ua/'
-TIMEOUT = 5
+ENDPOINT = 'http://macroom.com.ua/products/apple-macbook-pro-15-with-retina-display-2014-mgxa2'
+TIMEOUT = 60
 XPATH = '/html/body/div[2]/div[2]/div[1]/table/tbody/tr[1]/td[5]'
-TITLE = 'currency UAH per USD'
+TITLE = 'MGXA2 price '
 
 
 def main():
@@ -19,7 +19,7 @@ def main():
         try:
             html = requests.get(ENDPOINT).text
             tree = fromstring(html)
-            el = tree.xpath(XPATH)[0]
+            el = tree.get_element_by_id('price-val')
             value = float(el.text.replace(',', '.'))
         except Exception:
             time.sleep(TIMEOUT)
